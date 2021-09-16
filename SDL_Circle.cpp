@@ -20,41 +20,81 @@ int SDL_Circle::SDL_RenderDrawCircle(SDL_Renderer* renderer)
 	int xl = h - radius;
 	int y = k;
 	int yl = y;
-	int initParam = (int)round(pow(x - 0.5, 2) + pow(y + 1, 2) - pow(radius, 2));
-	int thisParam = initParam;
-	int nextParam;
+	int RE;
 	SDL_RenderDrawPoint(renderer, h, k);
 	while (x > y)
 	{
+		RE = RadiusError(x, y);
 		SDL_RenderDrawPoint(renderer, x, y);
+		SDL_RenderPresent(renderer);
+		SDL_RenderDrawPoint(renderer, x, yl);
 		SDL_RenderPresent(renderer);
 		SDL_RenderDrawPoint(renderer, xl, y);
 		SDL_RenderPresent(renderer);
 		SDL_RenderDrawPoint(renderer, xl, yl);
 		SDL_RenderPresent(renderer);
-		SDL_RenderDrawPoint(renderer, x, yl);
-		SDL_RenderPresent(renderer);
 		SDL_RenderDrawPoint(renderer, y, x);
 		SDL_RenderPresent(renderer);
-		SDL_RenderDrawPoint(renderer, yl, x);
-		SDL_RenderPresent(renderer);
 		SDL_RenderDrawPoint(renderer, y, xl);
+		SDL_RenderPresent(renderer);
+		SDL_RenderDrawPoint(renderer, yl, x);
 		SDL_RenderPresent(renderer);
 		SDL_RenderDrawPoint(renderer, yl, xl);
 		SDL_RenderPresent(renderer);
 		++y;
 		--yl;
-		if (thisParam <= 0)
-		{
-			nextParam = (int)round(thisParam + 2*(y + 1) + 1);
-		}
-		else
+		if (RE > 0)
 		{
 			--x;
 			++xl;
-			nextParam = (int)round(thisParam + 2*(y + 1) - 2*(x - 1) + 1);
 		}
-		thisParam = nextParam;
 	}
+	//int x = h + radius;
+	//int xl = h - radius;
+	//int y = k;
+	//int yl = y;
+	//int initParam = (int)round(pow((double)(x - 0.5), 2.00) + pow((double)(y + 1.00), 2.00) - pow((double)radius, 2.00));
+	//int thisParam = initParam;
+	//int nextParam;
+	//SDL_RenderDrawPoint(renderer, h, k);
+	//while (x > y)
+	//{
+	//	SDL_RenderDrawPoint(renderer, x, y);
+	//	SDL_RenderPresent(renderer);
+	//	SDL_RenderDrawPoint(renderer, xl, y);
+	//	SDL_RenderPresent(renderer);
+	//	SDL_RenderDrawPoint(renderer, xl, yl);
+	//	SDL_RenderPresent(renderer);
+	//	SDL_RenderDrawPoint(renderer, x, yl);
+	//	SDL_RenderPresent(renderer);
+	//	SDL_RenderDrawPoint(renderer, y, x);
+	//	SDL_RenderPresent(renderer);
+	//	SDL_RenderDrawPoint(renderer, yl, x);
+	//	SDL_RenderPresent(renderer);
+	//	SDL_RenderDrawPoint(renderer, y, xl);
+	//	SDL_RenderPresent(renderer);
+	//	SDL_RenderDrawPoint(renderer, yl, xl);
+	//	SDL_RenderPresent(renderer);
+	//	++y;
+	//	--yl;
+	//	if (thisParam <= 0)
+	//	{
+	//		nextParam = (int)round((double)(thisParam + 2.00*(y + 1.00) + 1.00));
+	//	}
+	//	else
+	//	{
+	//		--x;
+	//		++xl;
+	//		nextParam = (int)round((double)(thisParam + 2.00*(y + 1.00) - 2*(x - 1.00) + 1.00));
+	//	}
+	//	thisParam = nextParam;
+	//}
 	return -1;
+}
+
+int SDL_Circle::RadiusError(int x, int y)
+{
+	int RE = (x*x) - ((h*x)<<1) + (h*h) + (y*y) + (((k-1)*y)<<1) + ((k-1) * (k-1)) - (radius * radius);
+	int XC = 1 - ((h*x)<<1) - (x<<1);
+	return (RE<<1) + XC;
 }
