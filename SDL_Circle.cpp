@@ -1,5 +1,6 @@
 #include "SDL_Circle.h"
 #include <iostream>
+#include <stack>
 
 SDL_Circle::SDL_Circle()
 {
@@ -191,4 +192,28 @@ int SDL_Circle::RadiusError(int x, int y)
 	int RE = (x*x) - ((x*h)<<1) + (h*h) + (y*y) - ((y*k)<<1) + (y<<1) - (k<<1) + (k*k) + 1 - (radius*radius);
 	int XC = 1 + (h<<1) - (x<<1);
 	return (RE<<1) + XC;
+}
+
+int SDL_Circle::SDL_DijkstraFill(SDL_Renderer* renderer)
+{
+	std::stack<Point> points;
+	Point p;
+	for (int i = h - radius; i < h + radius; ++i)
+	{
+		for (int j = k - radius; j < k + radius; ++j)
+		{
+			if (((i - h)*(i - h)) + ((j - k)*(j - k)) <= (radius*radius))
+			{
+				p.x = i;
+				p.y = j;
+				points.push(p);
+			}
+		}
+	}
+	while (!points.empty())
+	{
+		SDL_RenderDrawPoint(renderer, points.top().x, points.top().y);
+		points.pop();
+	}
+	return -1;
 }

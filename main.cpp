@@ -12,22 +12,22 @@ int main(int argc, char* args[])
 	SDL_Renderer* Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(Renderer, 0, 255, 0, 255);
 	SDL_RenderClear(Renderer);
-	SDL_Circle circle = SDL_Circle(200, 300, 500);
+	SDL_Circle circle = SDL_Circle(200, 700, 500);
 	SDL_SetRenderDrawColor(Renderer, 255, 0, 0, 255);
 	circle.SDL_RenderDrawCircle(Renderer);
-	circle.SDL_RenderFillCircle(Renderer);
-	SDL_Circle circle2;
-	int l;
-	for (int i = 0; i < 10; ++i)
-	{
-		//SDL_RenderClear(Renderer);
-		l = std::rand()%720;
-		SDL_SetRenderDrawColor(Renderer, std::rand()%256, std::rand()%256, std::rand()%256, 255);
-		circle2 = SDL_Circle(std::rand()%500, l, l);
-		circle2.SDL_RenderFillCircle(Renderer);
-		SDL_Delay(1000);
-		SDL_RenderPresent(Renderer);
-	}
+	circle.SDL_DijkstraFill(Renderer);
+	//circle.SDL_RenderFillCircle(Renderer);
+	//SDL_Circle circle2;
+	//int l;
+	//for (int i = 0; i < 10; ++i)
+	//{
+	//	l = std::rand()%720;
+	//	SDL_SetRenderDrawColor(Renderer, std::rand()%256, std::rand()%256, std::rand()%256, 255);
+	//	circle2 = SDL_Circle(std::rand()%500, l, l);
+	//	circle2.SDL_RenderFillCircle(Renderer);
+	//	SDL_Delay(1000);
+	//	SDL_RenderPresent(Renderer);
+	//}
 	SDL_RenderPresent(Renderer);
 	
 	SDL_Delay(20000);
