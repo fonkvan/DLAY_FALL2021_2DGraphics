@@ -20,8 +20,8 @@ int SDL_Circle::SDL_RenderDrawCircle(SDL_Renderer* renderer)
 {
 	int x = h + radius;
 	int xl = h - radius;
-	int xt = h;
-	int xb = xt;
+	int xt = h - 1;
+	int xb = xt + 2;
 	int y = k;
 	int yl = y;
 	int yt = k - radius;
@@ -84,7 +84,7 @@ int SDL_Circle::SDL_RenderDrawCircle(SDL_Renderer* renderer)
 		SDL_RenderDrawPoint(renderer, xb, yt);
 		SDL_RenderDrawPoint(renderer, xt, yb);
 		SDL_RenderDrawPoint(renderer, xb, yb);
-		if (RE2 > 0)
+		if (RE2 > std::abs(h-k))
 		{
 			--yb;
 			++yt;
@@ -101,6 +101,7 @@ int SDL_Circle::SDL_RenderDrawCircle(SDL_Renderer* renderer)
 	return -1;
 }
 
+//CONSIDER DEPRECATED
 int SDL_Circle::SDL_RenderFillCircle(SDL_Renderer* renderer)
 {
 	int x = h + radius;

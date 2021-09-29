@@ -1,2 +1,3 @@
 ﻿  main.cpp
+C:\Users\vilif\source\repos\DLAY_FALL2021_2DGraphics\main.cpp(20,6): warning C4101: 'l': unreferenced local variable
   DLAY_FALL2021_2DGraphics.vcxproj -> C:\Users\vilif\source\repos\DLAY_FALL2021_2DGraphics\Debug\DLAY_FALL2021_2DGraphics.exe
